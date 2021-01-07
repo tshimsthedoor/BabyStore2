@@ -24,7 +24,11 @@ namespace BabyStore2.Controllers
                 products = products.Where(p => p.Name.Contains(search) ||
                 p.Description.Contains(search) ||
                 p.Category.Name.Contains(search));
+                ViewBag.Search = search;
             }
+            var categories = products.OrderBy(p => p.Category.Name)
+                .Select(p => p.Category.Name).Distinct();
+            ViewBag.Category = new SelectList(categories);
             return View(products.ToList());
         }
 
